@@ -1,0 +1,96 @@
+# Learn Cognito
+
+## Step 1: Create a Cognitp User Pool
+
+User Pool information
+----------------------
+Pool name: ClarenceTest1
+
+Pool id:  ap-southeast-1_QfJlDejRP
+
+User
+-----
+Email: ho.clarence@gmail.com
+
+Temp password: Abc#1234
+
+
+App client
+----------
+Name: ClarenceClient1
+
+App client id: 14ekrq5neh6sikcmtlsumru6f0
+(select not to generate secret for client)
+
+
+https://clarencetest1.auth.ap-southeast-1.amazoncognito.com/login?response_type=code&client_id=1bkob9d0r0v811bl6rnfcg5t25&redirect_uri=https://clarence.com/apptest&state=STATE&scope=openid+profile+aws.cognito.signin.user.admin
+
+
+
+
+Curl command for login:
+curl -X POST --data @aws-auth-data.json -H 'X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth' -H 'Content-Type: application/x-amz-json-1.1' https://cognito-idp.ap-southeast-1.amazonaws.com/ | jq
+
+AWS CLI Command for auth:
+aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --auth-parameters USERNAME=ho.clarence@gmail.com,PASSWORD=Abc#1234 --client-id 14ekrq5neh6sikcmtlsumru6f0 | jq
+
+aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --auth-parameters USERNAME=ho.clarence@gmail.com,PASSWORD=Xyz#2345 --client-id 14ekrq5neh6sikcmtlsumru6f0 | jq
+
+Sample response:
+{
+  "AuthenticationResult": {
+    "ExpiresIn": 3600,
+    "IdToken": "eyJraWQiOiJSaSsybDd1aTBFWFowdnhjdVwvMENOOUhBcjRWYk82V241cytTYXIyQVNrND0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5M2E2MGY1My1mM2FjLTQwZWEtOTU2ZS01ODZhZjdjMDlhZWEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLXNvdXRoZWFzdC0xX2QzOWRHeHExdiIsInBob25lX251bWJlcl92ZXJpZmllZCI6dHJ1ZSwiY29nbml0bzp1c2VybmFtZSI6IjkzYTYwZjUzLWYzYWMtNDBlYS05NTZlLTU4NmFmN2MwOWFlYSIsImF1ZCI6ImZjdHJsamJpYTJuMWYzb25uYTZqbjR2djAiLCJldmVudF9pZCI6ImFlN2FmZTZlLWM5ZTAtNGZkNC1hNDQzLWRiMjU2N2RlZjQyNSIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTY3MTU3MjAyLCJuYW1lIjoiY2xhcmVuY2UiLCJwaG9uZV9udW1iZXIiOiIrODUyOTQyNjc4NjIiLCJleHAiOjE1NjcxNjA4MDIsImlhdCI6MTU2NzE1NzIwMiwiZW1haWwiOiJoby5jbGFyZW5jZUBnbWFpbC5jb20ifQ.mjf431OR3_KU7ZElH5uNtFOHTmCB2EvR5QlpH3tJRjMUQtKAhIhCtbrgag3YrZGded_bdZypnRdbvednMjrnRj_-Fk7XB4X3hl_17Ds0Msvq3bMwtvjITa1vUorXtOOP9oOSk7VDErWp4czXfiiB7OluzfurTS_5QhkpcR7y8jrDEUWH7YSwK8ynkoAAixKnhsDl1m1Osi95ZzT9KbWzEsPcYv0PA3RdN7qsWSHV1ZWhvUo8H2dT-BV5YyZGcUm3KNWmvtTTee5K1-v3zalHSepy1ZQRIkgMUx1063HjTxU7m2zQBczt_4jBW33O4IWoYCvOn08ynj6_X_SB_Ah6qg",
+    "RefreshToken": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.kBw7_WPSFumVQAT4PEDhw9BkGAFE_XXtLsTkW3WgE1oLnfdnr1D6Y-d8zHawh6t0E-SJ1_l2M5C1p7zwMPANZ57oZJKf90ZA7S7RP24JEsImYP_UHEcp5W4E194tI7_tPY6My4XpBPFsuVNH3C7WBt9k4jPojzcjEMJtoQmnSBE8nDTTpzsO8Ps77_rCdjmAO6oRSCdX58PYBDUgAayxs5_adCegILRjlm6ZLSUY4GVAjgUg-t6w1JbqtCQ5TfvkQUfgguBeoOThlY7nQphg4kIgMy_s2ILHMA4dqrzT2dcelj6ZAfl6ok3E7l4cqmYNqvgXr6IDm-F071X6eV9gVg.vyfso7tWJyrh0h4C.tNipUvYiMXKjbGG6Ki4wgdFs3wMKFsFcpsE_c3YNcbWL5u4yW_pkkAiKibeLJV1pg2qxKJcK6vlWfJ6IV47ZInyxIX4I1OIsuIQACjtOlIeOWLapgo9ANywd2RtQN6lOEwQ1ZRTeIu43o8-PDWtm8yvgjeKkfmdeNo8mTjVeEFH1zhcKWxH1n7l-w6tWNZm4HtImvk9oAhaMXbJKXlfbxWHc_8glge6eG4Q99FyuER7GYyCLnxkBor29IipUIESqpapjBPWkK03Ic4bvK8azgqo691r4rUWEVx571bBWDRrDPgi8jZbhXYJgSJdnfK1fPbnVIujCveO-s-gFR6iHUrze8f8RYmgVs9LTMcA_FL8q8joMk_Hp3OuDvfHnwvwvokQnmsuDpaIkgMvvjvLASknb6S8BNdJucZHDp4A4JL8TAdREAtYHHG1Zwi9i3CkXU_FCMIf0tPFODPFX9wneFQ6Fq3OoQO6WAedRlAROHGdAjFOex-XIuyvufkr90iSZ3-oo-B2m9Fe8pJkv4xsuLhIMU1Zot5aXaGPYIPca0CTCtdA7sMoPzeanET6NB9uVtZOb0cg5TkjEms8NDWp0Akb75blxSDfofysNeONFhI3hMNF5L0pVtXBTgRjDc2HP91Rfaf2fnWDBXH9UuHkn_mZcJJh5R27w2dli0cnwfUxC434vIr2sItpa5vMjSp2Vaj6sCFNZDOtsmLhDr0Mk-wB_Paaitb_znyZSEmgv0zJdeZOkMu67x8DFGByO1gFbvQMSyJaW96Q7F13VPiP07oSDvnM9dtmArdTcI3kRXnwtqPdtfXuiutGAtsN-ZoXroThgQpa7oOVzwS7z46wscDHKHi4LDdTIAG9wJ2qGXHq5vM-U3vKrMcthmab5lMnuC7Z0ZmZhSEQinCPHtm35vlF2NWu7ep3atEoAIjWdiFvlfgBB8-RZeNjlFf7LdzAnzLP9_FatxdDKmXzJYuXJ9NPVP3iTKMqbMP2uzAV418MsrQ3IG43WS-QJpCxnNcHg_iLdl-ge0fDbyK6-i8UC3QMI5QaZwp6TQMvjzw4dsxmVtA0hJ_oAkMjsfdUsq5PzFEfMVI3uXA-lfGJz3z_14pcuSI8XZaCwlGYLIbKSIbt5rKUUhDgqTng50nQ0TR6UcCmNZ1oLGQVMFcZp-Vz4DwyZym-0yb9FdCqZf9qGPyqc-KLb7UCU0yijjtFZJepkbA58SYTIFAAF88hFnkUCMRBH8Lw2o700dbAvASTDtuEzPbY-4Q0C5XHDu7xe4pL6D-uBmrN8ik9IHDB7vkp01y4AV8p9ZV-0D68zVkzbBwJYO7SUQbWq93-AXgG5SRWwsmwUCSDfMg.9H-rJa9vdbqYEsZIWJPFCA",
+    "TokenType": "Bearer",
+    "AccessToken": "eyJraWQiOiI1Qk9pZ0JCQWE1VGFxenh3NWZcL1VJNXVRZnBpbkFpWG5IRHlsWU5ua29OOD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5M2E2MGY1My1mM2FjLTQwZWEtOTU2ZS01ODZhZjdjMDlhZWEiLCJldmVudF9pZCI6ImFlN2FmZTZlLWM5ZTAtNGZkNC1hNDQzLWRiMjU2N2RlZjQyNSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE1NjcxNTcyMDIsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMV9kMzlkR3hxMXYiLCJleHAiOjE1NjcxNjA4MDIsImlhdCI6MTU2NzE1NzIwMiwianRpIjoiM2U3YmQwNTktMjM1My00ZTA0LWJmYjAtMWE0OTBjYjdkN2NkIiwiY2xpZW50X2lkIjoiZmN0cmxqYmlhMm4xZjNvbm5hNmpuNHZ2MCIsInVzZXJuYW1lIjoiOTNhNjBmNTMtZjNhYy00MGVhLTk1NmUtNTg2YWY3YzA5YWVhIn0.hxz69UGv2IrO4LAJRijylThMUAB5qc8zfUF6kF49XuGIiK1GowagUrKZ4XvaL_VrUPcpa_SzelDgZYGiRIU7GkKyn6IAmUhuGaw8t8p9x7TTvYSXuC9BwBhbLFO8EFpSvAn1ZF0nTJumHgtgO9YqAG8-3L6efJXxdxK7QSK7yxN_HkqXQnD2ANVNipuN8qwZiiX028zrk-mf0XETgEGf-24AHYL5eGhx3OsFeB6avexFgr2ETQb5698rdsRrKqulY6wwpKhHIAWwe5U3bGneMQ6oE2vtTOMyAhmy35As2GOVoVaQtPym9vvXpVS0UvbE7zb9XWuyIlkCrj-Iib93zQ"
+  },
+  "ChallengeParameters": {}
+}
+
+
+curl -X POST --data @aws-respond-chal-data.json -H 'X-Amz-Target: AWSCognitoIdentityProviderService.RespondToAuthChallenge' -H 'Content-Type: application/x-amz-json-1.1' https://cognito-idp.ap-southeast-1.amazonaws.com/ | jq
+
+AWS CLI Command for force change password:
+aws cognito-idp respond-to-auth-challenge --client-id 14ekrq5neh6sikcmtlsumru6f0 --challenge-name NEW_PASSWORD_REQUIRED --challenge-responses userAttributes.name=clarence,USERNAME=ho.clarence@gmail.com,NEW_PASSWORD="Xyz#2345" --session "74rrPeB71OBwI9vOT_yzl1ea8mFNOeoJoTmf-rMnQ0MJ4drY0iTLSglcyqnr0u-evqHynSMk2dFyFwCW-Y50S5catSaZ400aErAD4VMTzyrWATm6Rx2Yb3UcbRNap1kJsnqQEP7AZzFQK89OSSBubBbm2YsmCd1KRJYx4M0nMg2cMVKOrJHZrF6Sy5849MEIU_FDsOaWtXBcCmJ_E-UgL2x1ttuB3ijyw48v4UtU-sK6n-Ur5v8EBm57bK_RniW-d2rXRDo5SWpqn6iyy0XvvVlOfTRNuyCkl15bAbZy5AtapFlGXDUCX1q0LSa_k19V_DqECJA4WsS6kbfXlU-KB3jlAkmTNARRD7rRRmS-ZyEOkZ2YzFnnMX4TKl2ghOtjwHpSp8xN4tpYqqIPvgAs_MXxJiQ-Cu2uRPMFh0xqSD-DJ08-cP9kAZH6hUPFtGbwhOa9HhL21N9ovyd2249ydD_qlyXVBiZkFqqMKKHJXAUu0dGRrLckU1zFug9g5uV6ooX2iXgJ5LNUSwNuVws-GkHDWZQTQ6mi58Tt72I1HgWgi1UCaZ0X3Lo8KLtoj6GvjmDVGtW_F4AkVR6EmV42j8l9oBfkSlRBCVtQJ4LC2hexnaEJH2mQPjEIj27UuaIqMe8S96r6jVXjFXDsYFp8G5nQ9CfZwl9kRbJX2S-kxUCwb3fqky7IDOd_Ex3jSQTgNoWaKdGCXAQMjSx5CkofD64UjoRgaQZz79tyM4g0-ybvkVVspbcRpwggH1GhbVyArnN4uO7hPRlsnc3GfjwDIr_-5VOa0NhMjsyiap5QxNT2UqxT98Zq6VXieCGaM-XSP8obnV0ANDIc0T55rRq4bve1owMMGmINLqNFzZsQqkuXhsr2hNktukeilWy__msy7gfiwJofk5Vwfqx4V7Eaz8aMdpI-VFrrmK7r6N2iT0AHVABCjFc_LgUu_be3WLucqraXJD9Y8xWt6WR7Nt56loin1l1t-3rMXl1sRwQ6SXRQbo_T" | jq
+
+
+## Step 2: Create a testing Lambda function
+
+Lambda function information
+---------------------------
+Function name: ClarenceTest1
+
+
+## Step 3: Create API gateway
+
+API Gateway Information
+-----------------------
+Name: clarence-api-test1
+
+Resource
+--------
+Name: test1
+
+Method
+------
+Type: GET
+
+Test API with curl
+------------------
+curl -v https://daz9k37pjd.execute-api.ap-southeast-1.amazonaws.com/dev/test1 | jq
+
+Test API with curl (with ID token)
+------------------
+export TOKEN=<TOKEN>
+curl -v -H "Authorization: Bearer ${TOKEN}" https://daz9k37pjd.execute-api.ap-southeast-1.amazonaws.com/dev/test1 | jq
+
+
+# Step 4: Create API Gateway Authoriser
+
+API Gateway - Authoriser
+------------------------
+Name: Test1Authoriser
+
+
+Sample access token: eyJraWQiOiI1Qk9pZ0JCQWE1VGFxenh3NWZcL1VJNXVRZnBpbkFpWG5IRHlsWU5ua29OOD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5M2E2MGY1My1mM2FjLTQwZWEtOTU2ZS01ODZhZjdjMDlhZWEiLCJldmVudF9pZCI6IjkzZmNkYTU4LTI0ZWUtNGM3Ny05NWIwLTFkMzc4MjIwNTVhNyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE1NjcxNTY1ODksImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMV9kMzlkR3hxMXYiLCJleHAiOjE1NjcxNjAxODksImlhdCI6MTU2NzE1NjU5MCwianRpIjoiYThhZWYyMmYtMDgyYy00MDZkLWE0YjMtMTJlNzQ1NmRkOTY4IiwiY2xpZW50X2lkIjoiZmN0cmxqYmlhMm4xZjNvbm5hNmpuNHZ2MCIsInVzZXJuYW1lIjoiOTNhNjBmNTMtZjNhYy00MGVhLTk1NmUtNTg2YWY3YzA5YWVhIn0.HCVI_72pjnzo6VmRIg0Oovl4AcY4iHdybT9ZT_C2Fe8_7B_-g4MWAEXye9eCItonMpcsjkKDDEpx5b26LdPHLSeM1nGPhzQHyaZqFWT3Uyqx00XzqaVZBeJu7INy0TF92s0gu_CkyPcgYPg1zAL60Qu0myfVGYffOqHuXznLqIrC3dNArbcYN-95i7nqti8p5LApSAEO5TyZPWgIc8F5eVbFTG94aWpqdqkQCL2ZLCiuYe8z5K2__MHKmsNazLTxP5Hz37ZTLXps5H0xjqRDPWk_ccf6N54PGi2JWX3goaUBF4xQw7ZW6O2lic7r7A6By2w84LQ46QvBSwcOBhjvhg
